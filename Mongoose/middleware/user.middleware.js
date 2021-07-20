@@ -1,4 +1,4 @@
-const User = require('../dataBase/user');
+const User = require('../dataBase/model/User');
 const errorCodes = require('../constants/errorCodes.enum');
 const errorMessage = require('../error/error.message');
 
@@ -6,8 +6,8 @@ module.exports = {
     checkIsIdValid: (req, res, next) => {
         try {
             const { userId } = req.params;
-            if (+userId < 0 || !Number.isInteger(+userId) || Number.isNaN(+userId)) {
-                throw new Error(errorMessage.BAD_ID.en);
+            if (userId.length !== 24) {
+                throw new Error(errorMessage.BAD_ID);
             }
             next();
         } catch (e) {
@@ -16,11 +16,9 @@ module.exports = {
     },
     checkIsUserValid: async (req, res, next) => {
         try {
-            const { name, preferL = 'en' } = req.body;
-            for (const user of User) {
-                if (user.name === name) {
-                    throw new Error(errorMessage.BAD_USER[preferL]);
-                }
+            const { email } = req.body;
+            if (await User.findOne({ email })) {
+                throw new Error(errorMessage.BAD_USER);
             }
             await next();
         } catch (e) {

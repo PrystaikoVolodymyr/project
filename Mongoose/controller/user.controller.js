@@ -1,5 +1,5 @@
 const userService = require('../service/user.service');
-const User = require('../dataBase/user');
+const User = require('../dataBase/model/User');
 const errorCodes = require('../constants/errorCodes.enum');
 const magicString = require('../constants/magicString.enum');
 
@@ -33,9 +33,9 @@ module.exports = {
     deleteOneUser: async (req, res) => {
         try {
             const { userId } = req.params;
-            const { name } = User[userId];
+            const user = await User.findById(userId);
             await userService.deleteUser(userId);
-            res.json(magicString.DELETED_USER(name));
+            res.json(magicString.DELETED_USER(user.name));
         } catch (e) {
             res.status(errorCodes.BAD_REQUEST).json(e.message);
         }
