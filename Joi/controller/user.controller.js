@@ -1,6 +1,5 @@
-const userService = require('../service/user.service');
-const errorCodes = require('../constants/errorCodes.enum');
-const magicString = require('../constants/magicStrings.enum');
+const { userService } = require('../service');
+const { errorCodesEnum, magicStringsEnum } = require('../constants');
 
 module.exports = {
     getAllUsers: async (req, res) => {
@@ -9,7 +8,7 @@ module.exports = {
             const users = await userService.findAllUsers(userParams);
             res.json(users);
         } catch (e) {
-            res.status(errorCodes.BAD_REQUEST).json(e.message);
+            res.status(errorCodesEnum.BAD_REQUEST).json(e.message);
         }
     },
     getOneUser: async (req, res) => {
@@ -18,25 +17,25 @@ module.exports = {
             const user = await userService.findUserById(userId);
             res.json(user);
         } catch (e) {
-            res.status(errorCodes.BAD_REQUEST).json(e.message);
+            res.status(errorCodesEnum.BAD_REQUEST).json(e.message);
         }
     },
     createUser: async (req, res) => {
         try {
             const user = req.body;
             await userService.addNewUser(user);
-            res.json(magicString.CREATED_USER);
+            res.json(magicStringsEnum.CREATED_USER);
         } catch (e) {
-            res.status(errorCodes.BAD_REQUEST).json(e.message);
+            res.status(errorCodesEnum.BAD_REQUEST).json(e.message);
         }
     },
     deleteUser: async (req, res) => {
         try {
             const { userId } = req.params;
             await userService.deleteById(userId);
-            res.json(magicString.DELETED_USER);
+            res.json(magicStringsEnum.DELETED_USER);
         } catch (e) {
-            res.status(errorCodes.BAD_REQUEST).json(e.message);
+            res.status(errorCodesEnum.BAD_REQUEST).json(e.message);
         }
     }
 };

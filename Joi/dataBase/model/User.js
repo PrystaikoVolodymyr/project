@@ -9,7 +9,7 @@ const userSchema = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    age: { type: Number, required: true },
+    yearOfBorn: { type: Number, required: true },
     work: { type: Boolean, default: false },
     car: [carSubScheme]
 }, { timestamps: true });
