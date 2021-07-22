@@ -1,4 +1,5 @@
 const { userService } = require('../service');
+const { passwordHasher } = require('../helpers');
 const { statusCodesEnum, magicStringsEnum } = require('../constants');
 
 module.exports = {
@@ -32,9 +33,10 @@ module.exports = {
     },
     createUser: async (req, res) => {
         try {
-            const user = req.body;
-            await userService.addNewUser(user);
-            res.json(magicStringsEnum.CREATED_USER(user.name));
+            const { password, name } = req.body;
+            const hashPassword = await passwordHasher.hash(password);
+            await userService.addNewUser({ ...req.body, password: hashPassword });
+            res.json(magicStringsEnum.CREATED_USER(name));
         } catch (e) {
             res.status(statusCodesEnum.BAD_REQUEST).json(e.message);
         }

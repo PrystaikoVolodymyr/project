@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const { dataBase: { USER } } = require('../../constants');
 
 const carSubSchema = {
     model: { type: String },
@@ -13,4 +14,4 @@ const userSchema = new Schema({
     car: [carSubSchema]
 }, { timestamps: true });
 
-module.exports = model('User', userSchema);
+module.exports = model(USER, userSchema);

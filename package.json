@@ -2,7 +2,10 @@
   "name": "project",
   "version": "1.0.0",
   "dependencies": {
-    "express": "^4.17.1"
+    "bcrypt": "^5.0.1",
+    "express": "^4.17.1",
+    "joi": "^17.4.1",
+    "mongoose": "^5.13.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.1",
