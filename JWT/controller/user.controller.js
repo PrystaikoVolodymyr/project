@@ -21,11 +21,14 @@ module.exports = {
             res.status(statusCode.BAD_REQUEST).json(e.message);
         }
     },
-    deleteUser: async (req, res) => {
+    deleteUser: (req, res) => {
         try {
             const { userId } = req.params;
-            const { name } = await userService.deleteUserById(userId);
-            res.json(` User ${name} is delete`);
+            // const { name } = await userService.deleteUserById(userId);
+            if (userId !== req.user._id.toString()) {
+                throw new Error('Unauthorized');
+            }
+            res.json(` User ${userId} is delete`);
         } catch (e) {
             res.status(statusCode.BAD_REQUEST).json(e.message);
         }

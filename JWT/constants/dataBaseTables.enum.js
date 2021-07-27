@@ -1,3 +1,4 @@
 module.exports = {
-    USER: 'User'
+    USER: 'User',
+    O_AUTH: 'O_Auth'
 };
