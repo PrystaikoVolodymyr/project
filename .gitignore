@@ -3,3 +3,4 @@
 .idea
 JWT/.env
 package-lock.json
+nodeMailer/.env
